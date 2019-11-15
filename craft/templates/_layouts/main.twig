@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <title>Huertos Narrativos</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="referrer" content="origin-when-cross-origin" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/app.css" />
+</head>
+
+<body class="ltr">
+
+    <nav class="main-nav" data-topbar role="navigation">
+        <ul class="main-nav-list">
+            <li class="logo">
+                <a href="/"><span>Huertos Narrativos</span></a>
+            </li>
+            {% set navEntries = craft.entries.section('acerca').all() %}
+            {% nav entry in navEntries %}
+            <!-- <li {% if entry.hasDescendants() %} id="has-dropdown" {% endif %} class="menu-label has-dropdown"> -->
+            <li class='menu-label has-dropdown'>
+                {% if entry.hasDescendants(0) %}
+                <span class="btn-subsection">{{ entry.title }}</span>
+                {% else %}
+                <a href="{{ entry.url }}">
+                    <span class="btn-subsection">{{ entry.title }}</span>
+                </a>
+                {% endif %}
+                {% ifchildren %}
+                <ul class="dropdown">
+                    <li>
+                        <a href="{{ entry.url }}">
+                            <span class="btn-subsection">{{ entry.mainTitle }}</span>
+                        </a>
+                    </li>
+                    {% children %}
+                </ul>
+                {% endifchildren %}
+            </li>
+            {% endnav %}
+            <li class="toggle-topbar menu-label">
+                <a href="/sesiones"><span>Sesiones</span></a>
+            </li>
+            <li class="toggle-topbar menu-label">
+                <a href="/autores"><span>Autores</span></a>
+            </li>
+            </li>
+            <li class="toggle-topbar menu-label">
+                <a href="/historias"><span>Historias</span></a>
+            </li>
+        </ul>
+    </nav>
+
+    {% block main %}
+
+    {% endblock %}
+
+    <script src="/js/menu.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{% extends "_layouts/main" %}
+
+{% block main %}
+
+<div id="container">
+    <div class="hero-image" style="background: url(/assets/images/home.jpg) no-repeat bottom; background-size: cover"></div>
+    <section id="content">
+        <h2>Autores</h2>
+        <ul class="display-list">
+            {% for entry in craft.entries.section("autores").limit(5).all() %}
+            <li>
+                <a href="{{ entry.url }}">
+                    {% if entry.imagenDelAutor|length  %}
+                    <div class="thumb-image" style="background: url({{ entry.imagenDelAutor.one().getUrl() }}) no-repeat bottom; background-size: cover"></div>
+                    {% endif  %}
+                    <div class="overlay">
+                        <h2>{{ entry.title }}</h2>
+                    </div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+
+{% endblock %}

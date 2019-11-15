@@ -1,0 +1,30 @@
+
+
+{% extends "_layouts/main" %}
+
+{% block main %}
+
+<div id="container">
+    <div class="hero-image" style="background: url(/assets/images/home.jpg) no-repeat bottom; background-size: cover"></div>
+    <section id="content">
+        <div class="historias">
+            <ul class="common-list_ display-list">
+                {% for entry in craft.entries.section("sesiones").limit(5).all() %}
+                <li>
+                    <a href="{{ entry.url }}">
+                        {% if entry.heroImage|length %}
+                        <div class="thumb-image" style="background: url({{ entry.heroImage.one().getUrl() }}) no-repeat bottom; background-size: cover"></div>
+                        {% endif %}
+                        <div class="overlay">
+                            <h2>{{ entry.title }}</h2>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    
+    </section>
+</div>
+
+{% endblock %}

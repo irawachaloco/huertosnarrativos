@@ -1,0 +1,49 @@
+{% extends "_layouts/main" %}
+
+{% block main %}
+
+<div id="container">
+
+    {% set heroImage = entry.heroImage.one() %}
+    {% if heroImage|length %}
+    <div class="hero-image" style="background: url('{{ heroImage.getUrl() }}') no-repeat bottom; background-size: cover"></div>
+    {% else %}
+    <div class="hero-image" style="background: grey no-repeat bottom; background-size: cover"></div>
+    {% endif %}
+    
+
+    <section id="content">
+ 
+        <h1>{{ entry.title}}</h1>
+        {% set sede = entry.sede.value %}
+        <small>{{ sede }}</small>
+
+        {% for block in entry.contenido.all() %}
+        {% switch block.type %}
+
+        {% case 'texto' %}
+        {{ block.campoDeTexto }}
+
+        {% case 'video' %}
+        {% set embed = craft.videoEmbedder.getEmbedUrl(block.campoDeVideo) %}
+        <iframe src=" {{ embed }}"></iframe>
+
+        {% case 'imagen' %}
+        <div class="content-image" style="background: url('{{ block.campoDeImagen.one.getUrl() }}') no-repeat bottom; background-size: cover"></div>
+        
+        {% endswitch %}
+        {% endfor %}
+
+        {% if entry.entradasRelacionadas|length %}
+        <p><b>Contenido relacionado</b></p>
+        <ul>
+            {% for related in entry.entradasRelacionadas.limit(5).all() %}
+            <li><a href="{{ related.url }}">{{ related.title }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+            
+    </section>
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "_layouts/main" %}
+
+{% block main %}
+
+<div id="container">
+    <div class="hero-image" style="background: url(/assets/images/home.jpg) no-repeat bottom; background-size: cover"></div>
+    <section id="content">
+        {% set autorImg = entry.imagenDelAutor %}
+        {% if autorImg|length %}
+        <img src="{{ entry.imagenDelAutor.one().getUrl() }}" alt="" class="bio-image">
+        {% endif %}
+        
+        <h1>{{ entry.title}}</h1>
+        
+        {% if entry.correo|length %}
+        <small>{{ entry.correo }}</small><br>
+        {% endif %}
+
+        {% set value = entry.sede %}
+        <small><b>{{ entry.sede.value }}</b></small>
+        
+        <div>{{ entry.texto}}</div>
+
+        {% if entry.entradasRelacionadas|length %}
+        <p><b>Contenido relacionado</b></p>
+        <ul>
+            {% for related in entry.entradasRelacionadas.all() %}
+            <li><a href="{{ related.url }}">{{ related.title }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </section>
+</div>
+
+{% endblock %}
